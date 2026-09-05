@@ -13,15 +13,17 @@ class Solution {
     }
     private int partition(int[] arr, int low, int high) {
         // code here
-        int pivot = arr[low];
+        int idx = low + (high-low)/2;
+        int pivot = arr[idx];
         int sc = 0;
         
-        for(int i=low+1;i<=high;i++){
+        for(int i=low;i<=high;i++){
+            if(i==idx) continue;
             if(pivot>=arr[i]) sc++;
         }
         int cc = low+sc;
         
-        swap(arr,low,cc);
+        swap(arr,idx,cc);
         
         int i = low;int j=high;
         
@@ -30,7 +32,7 @@ class Solution {
             else if(arr[j]>pivot) j--;
             else if(arr[i]>pivot && arr[j]<=pivot){
                 swap(arr,i,j); 
-                // i++;j--;
+                i++;j--;
             }
                
         }
