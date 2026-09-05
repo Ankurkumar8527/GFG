@@ -2,12 +2,11 @@ class Solution {
     public void quickSort(int[] arr, int low, int high) {
         // code here
         if(low>=high) return;
-        int pidx = partition(arr,low,high);
-        quickSort(arr,low,pidx-1);
-        quickSort(arr,pidx+1,high);
-        
+        int pivot = partition(arr,low,high);
+        quickSort(arr,low,pivot-1);
+        quickSort(arr,pivot+1,high);
     }
-    private void swap(int[] arr,int i,int j){
+    private void swap(int[] arr, int i, int j){
         int t = arr[i];
         arr[i]=arr[j];
         arr[j]=t;
@@ -16,21 +15,24 @@ class Solution {
         // code here
         int pivot = arr[low];
         int sc = 0;
-        for(int i=low+1;i<=high;i++){
-            if(arr[i]<=pivot) sc++;
-        }
-        int cc = sc+low;
-        swap(arr,cc,low);
         
-        int i = low, j = high;
+        for(int i=low+1;i<=high;i++){
+            if(pivot>=arr[i]) sc++;
+        }
+        int cc = low+sc;
+        
+        swap(arr,low,cc);
+        
+        int i = low;int j=high;
+        
         while(i<cc && j>cc){
             if(arr[i]<=pivot) i++;
             else if(arr[j]>pivot) j--;
             else if(arr[i]>pivot && arr[j]<=pivot){
-                swap(arr,i,j);
-                i++;
-                j--;
+                swap(arr,i,j); 
+                // i++;j--;
             }
+               
         }
         return cc;
     }
